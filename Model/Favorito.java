@@ -10,6 +10,19 @@ public class Favorito implements Interface.Favorito {
     protected LocalDate releaseDate;
     protected String author;
 
+    public Favorito(){
+        this("", " ", 0, "", LocalDate.parse(""), "");
+    }
+
+    public Favorito(String cod, String name, double duration, String category, LocalDate releaseDate, String author) {
+        this.cod = cod;
+        this.name = name;
+        this.duration = duration;
+        this.category = category;
+        this.releaseDate = releaseDate;
+        this.author = author;
+    }
+
     public String getCod() {
         return cod;
     }
@@ -58,23 +71,4 @@ public class Favorito implements Interface.Favorito {
         this.author = author;
     }
 
-    @Override
-    public void addFav(Interface.Favorito fav) {
-
-    }
-
-    @Override
-    public void deletebyId(String id) {
-
-    }
-
-    @Override
-    public String findById() {
-        return null;
-    }
-
-    @Override
-    public void Update(Interface.Favorito fav) {
-
-    }
 }
