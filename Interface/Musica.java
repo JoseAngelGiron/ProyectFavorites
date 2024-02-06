@@ -1,6 +1,6 @@
 package Interface;
 
-public interface Musica {
+public interface Musica extends Favorito {
 
 
 }
