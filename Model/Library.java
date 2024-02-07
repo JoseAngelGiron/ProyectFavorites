@@ -1,5 +1,7 @@
 package Model;
 
+
+
 import Interface.ILibrary;
 
 import java.util.Objects;
@@ -45,29 +47,26 @@ public class Library implements ILibrary {
         return favSearched;
     }
 
-
-
-
     @Override
-    public String findByClass(int option) {
-        String favoriteClass;
-        //logica privada que devuelva la clase referida y devuelva cuantas opciones
-        Favorito TestFav = searchClass(option);
-
-        favoriteClass
-
-        return favoriteClass;
+    public Favorito[] findByClass(int option) {
+        Favorito[] fav = new Favorito[10];
+        selectClassToSearch(option, fav);
+        return fav;
     }
 
 
     @Override
     public Favorito findByName() {
+
+
         return null;
     }
 
     @Override
-    public Favorito addFav() {
-        return null;
+    public boolean addFav(Favorito fav) {
+        boolean sea
+
+        return true;
     }
 
     @Override
@@ -75,10 +74,7 @@ public class Library implements ILibrary {
 
     }
 
-    @Override
-    public void addFav(Favorito fav) {
 
-    }
 
     @Override
     public void deletebyId(String id) {
@@ -90,14 +86,72 @@ public class Library implements ILibrary {
 
     }
 
-    @Override
-    public void Update(Favorito fav) {
+
+
+    /*----- From here: Private Logic -----*/
+
+    /**
+     * Esta funcion se encarga de controlar que favortitos se van a buscar
+     * @param option recibe una opción para saber que favoritos se van a buscar
+     * @param fav el arreglo donde se van a a guardar los favoritos
+     */
+    private void selectClassToSearch(int option, Favorito[] fav) {
+
+        switch (option){
+            case 1:
+                 searchFavoriteMovies(fav);
+                 break;
+            case 2:
+                searchFavoriteMusic(fav);
+                break;
+            case 3:
+                searchFavoriteGames(fav);
+                break;
+
+        }
+
+
 
     }
 
-    private Favorito searchClass(int option) {
+    /**
+     * Añade al arreglo solo los favoritos de juegos
+     * @param fav el arreglo donde se van a meter los favoritos
+     */
+    private void searchFavoriteGames(Favorito[] fav) {
+        for(int i=0;i<favoritos.length;i++ ){
+            if(favoritos[i].getClass().equals(Juego.class)){
+                fav[i] = favoritos[i];
+            }
 
-        return Favorito;
+        }
     }
+
+    /**
+     * Añade al arreglo solo los favoritos de Movies
+     * @param fav el arreglo donde se van a meter los favoritos
+     */
+    private void searchFavoriteMovies(Favorito[] fav) {
+        for(int i=0;i<favoritos.length;i++ ){
+            if(favoritos[i].getClass().equals(Pelicula.class)){
+                fav[i] = favoritos[i];
+            }
+
+        }
+    }
+
+    /**
+     * Añade al arreglo solo los favoritos de Música
+     * @param fav el arreglo donde se van a meter los favoritos
+     */
+    private void searchFavoriteMusic(Favorito[] fav) {
+        for(int i=0;i<favoritos.length;i++ ){
+            if(favoritos[i].getClass().equals(Musica.class)){
+                fav[i] = favoritos[i];
+            }
+
+        }
+    }
+
 
 }

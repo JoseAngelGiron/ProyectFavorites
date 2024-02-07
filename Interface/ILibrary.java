@@ -8,13 +8,16 @@ public interface ILibrary {
 
     public Favorito findById(String ID);
 
-    public Favorito findByClass();
+    public Favorito[] findByClass(int option);
+
+
+
     public Favorito findByName();
 
     public Favorito addFav();
 
 
-    public void addFav(Favorito fav);
+    public boolean addFav(Favorito fav);
 
     public void deletebyId(String id);
 
