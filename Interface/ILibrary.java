@@ -21,7 +21,7 @@ public interface ILibrary {
 
     public boolean deletebyId(String id);
 
-    public void Update(Favorito fav);
+    public boolean Update(Favorito fav);
 
 
 }

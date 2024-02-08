@@ -124,10 +124,23 @@ public class Library implements ILibrary {
     }
 
 
-
+    /**
+     * Actualiza un favorito basandose en su codigo. Si ambos codigos coinciden, te actualiza el favorito con los datos
+     * del favorito que se le pasa
+     * @param fav el favorito que se va a actualizar
+     * @return true si se ha a actualizado, false si no se ha a actualizado.
+     */
     @Override
     public boolean Update(Favorito fav) {
+        boolean isNotUpdate = true;
 
+        for (int i=0;i<favoritos.size() && isNotUpdate ;i++){
+            if (favoritos.get(i).equals(fav)){
+                favoritos.add(i, fav);
+                isNotUpdate = false;
+            }
+        }
+        return isNotUpdate;
     }
 
 

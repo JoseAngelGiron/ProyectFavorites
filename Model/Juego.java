@@ -4,13 +4,12 @@ public class Juego extends Favorito implements Interface.Juego  {
 
     @Override
     public String toString() {
-        return "Juego{" +
-                "cod='" + cod + '\'' +
-                ", name='" + name + '\'' +
-                ", duration=" + duration +
-                ", category='" + category + '\'' +
-                ", releaseDate=" + releaseDate +
-                ", author='" + author + '\'' +
+        return "El juego"+ name +" tiene como datos: "+
+                "Código: " + cod + '\'' +
+                "Duración: " + duration +
+                "Categoría: '" + category + '\'' +
+                "Fecha de lanzamiento: " + releaseDate +
+                "Estudio:" + author + '\'' +
                 '}';
     }
 }
