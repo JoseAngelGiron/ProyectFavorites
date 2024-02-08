@@ -29,7 +29,7 @@ public interface GUI {
     /**
      * funcion que lea el arreglo, no devuelva nada y muestre los datos de los favoritos hasta que encuentre un nulo
      */
-    public void
+
 
     
 }

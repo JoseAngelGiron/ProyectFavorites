@@ -39,7 +39,7 @@ public class GUI implements Interface.GUI {
     public Favorito addFavorite() {
 
         System.out.println("|----------------------------------------------------|");
-        System.out.println("| ¿Que favorito es el que deseas añadir              |");
+        System.out.println("| ¿Que favorito es el que deseas añadir?             |");
         System.out.println("| 1. Pelicula                                        |");
         System.out.println("| 2. Musica                                          |");
         System.out.println("| 3. Juego                                           |");
@@ -93,10 +93,10 @@ public class GUI implements Interface.GUI {
 
     @Override
     public Favorito addMovie() {
-        Pelicula pelicula = new Pelicula();
+
         System.out.println("inserte el nombre de la pelicula: ");
 
-        pelicula.setPelicula();
+        Pelicula pelicula = new Pelicula();
         return pelicula;
     }
 
