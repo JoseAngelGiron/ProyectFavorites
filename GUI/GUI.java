@@ -83,10 +83,10 @@ public class GUI implements Interface.GUI {
                 opcion = addMovie();
                 break;
             case 2:
-                opcion = new Musica();
+                opcion = addSong();
                 break;
             default:
-                opcion = new Juego();
+                opcion = addGame();
         }
         return opcion;
     }
@@ -111,7 +111,26 @@ public class GUI implements Interface.GUI {
 
     @Override
     public Favorito addGame() {
+        Juego juego = new Juego();
+        System.out.println("Inserte el nombre del juego");
+
+        juego.setGame();
         return null;
+    }
+
+    @Override
+    public void solicitateNumber(String msg, int num1, int num2) {
+        int num;
+        System.out.println(msg);
+        Scanner teclado = new Scanner(System.in);
+        try {
+            do {
+                num = teclado.nextInt();
+            } while (num >=num1 && num <=num2);
+        }catch (Exception e){
+            System.out.println("Introduce una opcion valida");
+        }
+
     }
 
 }
