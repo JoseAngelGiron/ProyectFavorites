@@ -1,41 +1,39 @@
 package Model;
 
-
-
 import Interface.ILibrary;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
+
 public class Library implements ILibrary {
-    private Favorito[] favoritos;
+    private ArrayList<Favorito> favoritos;
 
-    public Library() {
-        favoritos = new Favorito[10];
-
+    public Library(){
+        this(new ArrayList<>());
     }
 
-
-    public Favorito[] getFavoritos() {
-        return favoritos;
-    }
-
-    public void setFavoritos(Favorito[] favoritos) {
+    public Library(ArrayList<Favorito> favoritos) {
         this.favoritos = favoritos;
     }
 
-    @Override
-    public String findAll() {
-        String listaFavoritos = " ";
-        for (Favorito favorito:favoritos){
-            listaFavoritos += favorito.toString();
-        }
-
-        return listaFavoritos;
+    public ArrayList<Favorito> getFavoritos() {
+        return favoritos;
     }
 
+    public void setFavoritos(ArrayList<Favorito> favoritos) {
+        this.favoritos = favoritos;
+    }
+
+
+    /**
+     * Esta función recibe un ID y compara con todos los favoritos existentes por su ID.
+     * @param ID recibe un ID con el que comparara con todos los ID de la lista
+     * @return el favorito coincidente con el ID pasado. Si no encuentra, devuelve un favorito nulo.
+     */
     @Override
     public Favorito findById(String ID) {
-        Favorito favSearched = new Favorito();
+        Favorito favSearched = null;
         for (Favorito favorito:favoritos){
 
             if(Objects.equals(ID, favorito.getCod())){
@@ -47,44 +45,92 @@ public class Library implements ILibrary {
         return favSearched;
     }
 
+    /**
+     * Esta función se encarga de borrar favoritos de la lista.
+     * @param id el id con el que hará comparaciones para borrar
+     * @return
+     */
     @Override
-    public Favorito[] findByClass(int option) {
-        Favorito[] fav = new Favorito[10];
+    public boolean deletebyId(String id) {
+        boolean idFound = false;
+
+        for(int i=0;i<favoritos.size() && !idFound;i++){
+            if(favoritos.get(i).getName().equalsIgnoreCase(id)){
+                favoritos.remove(i);
+                idFound = true;
+            }
+
+        }
+
+        return idFound;
+    }
+
+    /**
+     * Esta función busca todos los elementos de una mismo tipo de favoritos. Si no hay ningún tipo, devuelve una lista
+     * vacía
+     * @param option la opción referente a los favoritos que se van a buscar
+     * @return la lista con los favoritos que van a ser añadidos
+     */
+    @Override
+    public ArrayList<Favorito> findByClass(int option) {
+        ArrayList<Favorito> fav = new ArrayList<>();
         selectClassToSearch(option, fav);
         return fav;
     }
 
-
+    /**
+     * Esta función recibe un nombre de favorito y devuelve una lista con todos los favoritos que coincidan con
+     * ese nombre. Si no encuentra coincidencias, devuelve una lista vacía.
+     * @param name el nombre del favorito que se va a buscar
+     * @return la lista de favoritos con los nombres que coinciden con el nombre dado.
+     */
     @Override
-    public Favorito findByName() {
+    public ArrayList<Favorito> findByName(String name) {
+        ArrayList<Favorito> favoriteNameList = new ArrayList<>();
 
+        for (Favorito favorito : favoritos) {
+            if (favorito.getName().equalsIgnoreCase(name)) {
+                favoriteNameList.add(favorito);
+            }
+        }
 
-        return null;
+        return favoriteNameList;
     }
 
+
+
+
+    /**
+     * Este metodo añade un favorito al ultimo índice de la lista, si no hay otro con el mismo ID
+     * @param fav el favorito que va a recibir
+     * @return true si se ha añadido, false si el fav que se ha intentado añadir ya existía porque había
+     * un favorito con el mismo ID
+     */
     @Override
     public boolean addFav(Favorito fav) {
-        boolean sea
+        boolean noEquals = true;
 
-        return true;
+        for (int i=0;i<favoritos.size() && noEquals ;i++){
+            if (favoritos.get(i).equals(fav)){
+                noEquals = false;
+            }
+        }
+
+        if (noEquals) {
+            favoritos.add(fav);
+        }
+
+        return noEquals;
     }
+
+
 
     @Override
-    public void addFav(Interface.Favorito fav) {
+    public boolean Update(Favorito fav) {
 
     }
 
 
-
-    @Override
-    public void deletebyId(String id) {
-
-    }
-
-    @Override
-    public void Update(Interface.Favorito fav) {
-
-    }
 
 
 
@@ -95,7 +141,7 @@ public class Library implements ILibrary {
      * @param option recibe una opción para saber que favoritos se van a buscar
      * @param fav el arreglo donde se van a a guardar los favoritos
      */
-    private void selectClassToSearch(int option, Favorito[] fav) {
+    private void selectClassToSearch(int option, ArrayList<Favorito> fav) {
 
         switch (option){
             case 1:
@@ -118,10 +164,10 @@ public class Library implements ILibrary {
      * Añade al arreglo solo los favoritos de juegos
      * @param fav el arreglo donde se van a meter los favoritos
      */
-    private void searchFavoriteGames(Favorito[] fav) {
-        for(int i=0;i<favoritos.length;i++ ){
-            if(favoritos[i].getClass().equals(Juego.class)){
-                fav[i] = favoritos[i];
+    private void searchFavoriteGames(ArrayList<Favorito> fav) {
+        for(Favorito favorito:favoritos){
+            if(favorito.getClass().equals(Juego.class)){
+                fav.add(favorito);
             }
 
         }
@@ -131,10 +177,10 @@ public class Library implements ILibrary {
      * Añade al arreglo solo los favoritos de Movies
      * @param fav el arreglo donde se van a meter los favoritos
      */
-    private void searchFavoriteMovies(Favorito[] fav) {
-        for(int i=0;i<favoritos.length;i++ ){
-            if(favoritos[i].getClass().equals(Pelicula.class)){
-                fav[i] = favoritos[i];
+    private void searchFavoriteMovies(ArrayList<Favorito> fav) {
+        for(Favorito favorito:favoritos){
+            if(favorito.getClass().equals(Pelicula.class)){
+                fav.add(favorito);
             }
 
         }
@@ -144,10 +190,10 @@ public class Library implements ILibrary {
      * Añade al arreglo solo los favoritos de Música
      * @param fav el arreglo donde se van a meter los favoritos
      */
-    private void searchFavoriteMusic(Favorito[] fav) {
-        for(int i=0;i<favoritos.length;i++ ){
-            if(favoritos[i].getClass().equals(Musica.class)){
-                fav[i] = favoritos[i];
+    private void searchFavoriteMusic(ArrayList<Favorito> fav) {
+        for(Favorito favorito:favoritos){
+            if(favorito.getClass().equals(Musica.class)){
+                fav.add(favorito);
             }
 
         }

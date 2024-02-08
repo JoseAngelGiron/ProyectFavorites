@@ -1,6 +1,7 @@
 package Model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Favorito implements Interface.Favorito {
     protected String cod;
@@ -71,4 +72,10 @@ public class Favorito implements Interface.Favorito {
         this.author = author;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Favorito)) return false;
+        Favorito favorito = (Favorito) o;
+        return Objects.equals(cod, favorito.cod);
+    }
 }
