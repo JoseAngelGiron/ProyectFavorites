@@ -1,9 +1,9 @@
 package GUI;
 
-import Interface.Favorito;
-import Interface.Juego;
-import Interface.Musica;
-import Interface.Pelicula;
+import Model.Favorito;
+import Model.Juego;
+import Model.Musica;
+import Model.Pelicula;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,6 +24,11 @@ public class GUI implements Interface.GUI {
         System.out.println("| 3. eliminar favorito                               |");
         System.out.println("| 4. salir del programa                              |");
         System.out.println("|----------------------------------------------------|");
+    }
+
+    @Override
+    public void showFavorite(Interface.Favorito favToShow) {
+
     }
 
     /**
@@ -148,6 +153,18 @@ public class GUI implements Interface.GUI {
         return num;
     }
 
+    @Override
+    public void showList(ArrayList<Interface.Favorito> list, String msg) {
+        if (list.isEmpty()) {
+            System.out.println("No se encontraron elementos que coincidan.");
+        } else {
+            System.out.println(msg);
+            for (Model.Favorito fav : list) {
+                System.out.println(fav);
+            }
+        }
+    }
+
     /**
      * Esta función muestra una lista, comprobando previamente si esta vacía. Si lo esta, muestra un mensaje génerico diciendo
      * que no se encontraron elementos coincidentes, de otra forma, muestra la lista que se le pasa, mostrando previamente el
@@ -157,14 +174,7 @@ public class GUI implements Interface.GUI {
      * @param msg  mensaje que previamente se muestra antes de imprimir la lista
      */
     public void showList(ArrayList<Favorito> list, String msg) {
-        if (list.isEmpty()) {
-            System.out.println("No se encontraron elementos que coincidan.");
-        } else {
-            System.out.println(msg);
-            for (Favorito favorito : list) {
-                System.out.println(favorito);
-            }
-        }
+
     }
 
     /**
