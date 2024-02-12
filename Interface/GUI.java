@@ -1,6 +1,7 @@
 package Interface;
 
 import java.util.ArrayList;
+import Model.Favorito;
 
 public interface GUI {
 

@@ -39,7 +39,7 @@ public class Controller {
     }
 
     private static void selectWhatToSearch() {
-        int option = vista.solicitateNumber("como desea buscar: \n" +
+        int option = vista.solicitateNumber("¿Como desea buscar?: \n" +
                 "1 - Buscar por ID \n" +
                 "2 - Buscar por CLASE \n" +
                 "3 - Buscar por NOMBRE ", 1, 3);
@@ -57,7 +57,7 @@ public class Controller {
 
                 break;
             case 3:
-                vista.showList(library.findByName(vista.leeString("inserte el nombre que desea añadir: "))
+                vista.showList(library.findByName(vista.leeString("inserte el nombre que desea buscar: "))
                         , "la lista de coincidencias son:");
                 break;
         }

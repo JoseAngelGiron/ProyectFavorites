@@ -27,10 +27,7 @@ public class GUI implements Interface.GUI {
         return solicitateNumber("pulsa una opción valida mostrada a continuación", 1,4 );
     }
 
-    @Override
-    public void showFavorite(Interface.Favorito favToShow) {
 
-    }
 
     /**
      * Esta función muestra los datos del favorito que recibe. Si el favorito es nulo,
@@ -52,7 +49,7 @@ public class GUI implements Interface.GUI {
 
     }
 
-    /**
+    /*
      * Funcion que añade favotito (aún por modificar)
      *
      * @return devuelve el resultado añadido
@@ -100,11 +97,11 @@ public class GUI implements Interface.GUI {
         Scanner Teclado = new Scanner(System.in);
         String msg2;
         do {
-            System.out.println(msg + ": ");
+            System.out.println(msg + " : ");
             msg2 = Teclado.nextLine();
 
-        } while (!msg2.isEmpty());
-        return msg;
+        } while (msg2.isEmpty());
+        return msg2;
     }
 
     /**
@@ -136,21 +133,30 @@ public class GUI implements Interface.GUI {
     @Override
     public Favorito addFav(int option) {
         Favorito fav = null;
-        String cod = leeString("inserte el codigo de la pelicula:");
-        String name = leeString("inserte el nombre de la pelicula: ");
-        double duration = solicitateDouble("inserte la duracion de la pelicula: ", 0, 6);
-        String category = leeString("inserte el tipo de categoria: ");
-        String releaseDate = leeString("inserte la decha de lanzamiento: ");
-        String author = leeString("inserte el autor al que se relaciona: ");
+        String favorito ="Videojuego";
+        if(option==1){
+            favorito ="Pelicula";
+        } else if (option==2) {
+            favorito="Musica";
+        }
+
+        String cod = leeString("inserte el codigo de la "+ favorito +" :");
+        String name = leeString("inserte el nombre de la"+ favorito+" :");
+        double duration = solicitateDouble("inserte la duracion de la"+ favorito +" : ", 0, 6);
+        String category = leeString("inserte la categoria : ");
+        int year = solicitateNumber("inserte el año de lanzamiento : ", 1, 9999);
+        int month = solicitateNumber("Inserte el month de lanzamiento : ", 1, 12);
+        int day = solicitateNumber("Inserte el dia de lanzamiento : ", 1, 31);
+        String author = leeString("inserte el autor al que se relaciona : ");
 
         if(option==1){
-            Pelicula pelicula = new Pelicula(cod, name, duration, category, LocalDate.parse(releaseDate), author);
+            Pelicula pelicula = new Pelicula(cod, name, duration, category, LocalDate.of(year, month, day), author);
             fav=pelicula;
         } else if (option==2) {
-            Musica song= new Musica(cod, name, duration, category, LocalDate.parse(releaseDate), author);
+            Musica song= new Musica(cod, name, duration, category, LocalDate.of(year, month, day), author);
             fav=song;
         }else {
-            Juego juego= new Juego(cod, name, duration, category, LocalDate.parse(releaseDate), author);
+            Juego juego= new Juego(cod, name, duration, category, LocalDate.of(year, month, day), author);
             fav=juego;
         }
 
@@ -161,27 +167,45 @@ public class GUI implements Interface.GUI {
      * funcion que solicita un numero entero que contempla errores y que si no introduces en numero especifico
      * entre los permitidos entra en un buble hasta que se introduzca uno permitido
      * @param msg mensaje a introducir
-     * @param num1 variable numero 1 y minimo en la funcion
-     * @param num2 variable numero 2 y maxiomo en la funcion
+     * @param numMenor variable numero 1 y minimo en la funcion
+     * @param numMayor variable numero 2 y maxiomo en la funcion
      * @return devuelve el numero introducido
      */
     @Override
-    public int solicitateNumber(String msg, int num1, int num2) {
+    public int solicitateNumber(String msg, int numMenor, int numMayor) {
         int num = -1;
         System.out.println(msg);
         Scanner teclado = new Scanner(System.in);
-        try {
-            do {
+        do {
+
+            try {
                 num = teclado.nextInt();
-            } while (num >= num1 && num <= num2);
-        } catch (Exception e) {
-            System.out.println("Introduce una opcion valida");
-        }
+
+            } catch (Exception e) {
+                teclado.nextLine();
+                System.out.println("Introduce una opcion valida");
+            }
+
+
+        } while (num <= numMenor && num >= numMayor);
+
+
+
+
         return num;
     }
 
+
+    /**
+     * Esta función muestra una lista, comprobando previamente si esta vacía. Si lo esta, muestra un mensaje génerico diciendo
+     * que no se encontraron elementos coincidentes, de otra forma, muestra la lista que se le pasa, mostrando previamente el
+     * mensaje que se le ha pasado
+     *
+     * @param list la lista de favoritos que se le pasa
+     * @param msg  mensaje que previamente se muestra antes de imprimir la lista
+     */
     @Override
-    public void showList(ArrayList<Interface.Favorito> list, String msg) {
+    public void showList(ArrayList<Favorito> list, String msg) {
         if (list.isEmpty()) {
             System.out.println("No se encontraron elementos que coincidan.");
         } else {
@@ -192,17 +216,7 @@ public class GUI implements Interface.GUI {
         }
     }
 
-    /**
-     * Esta función muestra una lista, comprobando previamente si esta vacía. Si lo esta, muestra un mensaje génerico diciendo
-     * que no se encontraron elementos coincidentes, de otra forma, muestra la lista que se le pasa, mostrando previamente el
-     * mensaje que se le ha pasado
-     *
-     * @param list la lista de favoritos que se le pasa
-     * @param msg  mensaje que previamente se muestra antes de imprimir la lista
-     */
-    public void showList(ArrayList<Favorito> list, String msg) {
 
-    }
 
     /**
      * Esta función recibe un true o false y en función de true o false que recibe, muestra un mensaje diciendo
@@ -250,13 +264,19 @@ public class GUI implements Interface.GUI {
         double num = -1;
         System.out.println(msg);
         Scanner teclado = new Scanner(System.in);
-        try {
+
             do {
-                num = teclado.nextInt();
-            } while (num >= num1 && num <= num2);
-        } catch (Exception e) {
-            System.out.println("Introduce una opcion valida");
-        }
+                try {
+                num = teclado.nextDouble();
+                }catch (Exception e) {
+                    teclado.nextLine();
+                    System.out.println("Introduce una opcion valida");
+                }
+
+
+
+            } while (num <= num1 && num >= num2);
+
         return num;
     }
     public Favorito updateFavorite(){

@@ -16,7 +16,6 @@ public class Pelicula extends Favorito implements Interface.Pelicula, Serializab
                 "Duración: " + duration +
                 "Categoría: '" + category + '\'' +
                 "Fecha de lanzamiento: " + releaseDate +
-                "Estudio:" + author + '\'' +
-                '}';
+                "Estudio:" + author + '\'';
     }
 }
