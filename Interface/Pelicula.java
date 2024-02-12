@@ -1,4 +1,4 @@
 package Interface;
 
-public interface Pelicula {
+public interface Pelicula extends Favorito{
 }
