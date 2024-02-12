@@ -10,7 +10,7 @@ public class Musica extends Favorito implements Interface.Musica, Serializable {
 
     @Override
     public String toString() {
-        return "La canción"+ name +" tiene como datos: "+
+        return "La canción "+ name +" tiene como datos: \n\n"+
                 "Código: " + cod + "\n" +
                 "Duración: " + duration + "\n"+
                 "Categoría: '" + category + "\n" +

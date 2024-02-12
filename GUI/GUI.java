@@ -12,19 +12,21 @@ import java.util.Scanner;
 public class GUI implements Interface.GUI {
 
     /**
-     * Menu principal del programa y la primera interraccion con el usuario
+     * Función que se encarga de mostrar el menu principal y devolver la opción selecionada
+     * Hace uso de la función solicitate number
+     * @return un número, entre 1 y 5
      */
     @Override
-    public  int showMainMenu() {
+    public int showMainMenu() {
         System.out.println("Menu principal");
         System.out.println("|----------------------------------------------------|");
-        System.out.println("| 1. listar favoritos                                |");
-        System.out.println("| 2. añadir favorito                                 |");
-        System.out.println("| 3. eliminar favorito                               |");
-        System.out.println("| 4. actualizar el programa                          |");
-        System.out.println("| 5. salir del programa                              |");
+        System.out.println("| 1. Listar favoritos                                |");
+        System.out.println("| 2. Añadir favorito                                 |");
+        System.out.println("| 3. Eliminar favorito                               |");
+        System.out.println("| 4. Actualizar un favorito                          |");
+        System.out.println("| 5. Salir del programa                              |");
         System.out.println("|----------------------------------------------------|");
-        return solicitateNumber("pulsa una opción valida mostrada a continuación", 1,4 );
+        return solicitateNumber("Introduzca una opción valida entre las mostradas ", 1,5 );
     }
 
 
@@ -39,20 +41,20 @@ public class GUI implements Interface.GUI {
     public void showFavorite(Favorito favToShow) {
         if (favToShow != null) {
             System.out.println("|----------------------------------------------------|");
-            System.out.println("|" + favToShow + "                                           |");
+            System.out.println("|" + favToShow + "                                   |");
             System.out.println("|----------------------------------------------------|");
         } else {
             System.out.println("|----------------------------------------------------|");
-            System.out.println("| el favorito no se encontro, prueb   |");
+            System.out.println("| El favorito no se encontro, pruebe de nuevo        |");
             System.out.println("|----------------------------------------------------|");
         }
 
     }
 
-    /*
-     * Funcion que añade favotito (aún por modificar)
+    /**
+     * Funcion que solicita un número por pantalla coincidente con alguna de las opciones que se muestran.
      *
-     * @return devuelve el resultado añadido
+     * @return un número, entre 1 y 3, en función del número que se desea añadir.
      */
     @Override
     public Favorito addFavorite() {
@@ -60,104 +62,82 @@ public class GUI implements Interface.GUI {
         System.out.println("|----------------------------------------------------|");
         System.out.println("| ¿Que favorito es el que deseas añadir?             |");
         System.out.println("| 1. Pelicula                                        |");
-        System.out.println("| 2. Musica                                          |");
+        System.out.println("| 2. Canción                                         |");
         System.out.println("| 3. Juego                                           |");
         System.out.println("|----------------------------------------------------|");
         int opcion = solicitateNumber("Inserte una opcion valida", 1,3);
-        Favorito result = options(opcion);
 
-        return result;
+        return addFav(opcion);
     }
 
     /**
-     * funcion que manda un mensaje para eliminar un favorito
-     * @return devulve el mensaje
+     * funcion que manda solicita un ID, para eliminar un favorito coincidente con dicho ID
+     * @return devuelve el código del favorito que se va a eliminar
      */
     @Override
     public String removeFavorite() {
-        return leeString("inserte el favorito que desea borrar: ");
+        return leeString("inserte el código del favorito que desea borrar: ");
     }
 
-    /**
-     * funcion que muestra el resultado (no es necesaria)
-     * @param Resultado
-     */
-    @Override
-    public void showResult(String Resultado) {
 
-    }
 
     /**
      * funcion que sirve para leer un string y que comprueba si esta vacio o no, en un bucle
      * @param msg el mensaje a escribir
-     * @return devuleve el mensaje
+     * @return devuelve un String, que ha introducido el usuario por pantalla
      */
     @Override
     public String leeString(String msg) {
-        Scanner Teclado = new Scanner(System.in);
+        Scanner teclado = new Scanner(System.in);
         String msg2;
         do {
-            System.out.println(msg + " : ");
-            msg2 = Teclado.nextLine();
+            System.out.println(msg + ": ");
+            msg2 = teclado.nextLine();
+
+            if (msg2.isEmpty()){
+                System.out.println("""
+                        Por favor, introduzca algún tipo de información.
+                         Pruebe de nuevo por favor\s
+                        """);
+            }
 
         } while (msg2.isEmpty());
         return msg2;
     }
 
-    /**
-     * switch que indica que fvorito añadir si es pelicula, musica o juego
-     * @param o opcion a elegir entre las 3 disponibles
-     * @return devuelve el favorito
-     */
-    @Override
-    public Favorito options(int o) {
-        Favorito fav;
-        switch (o) {
-            case 1:
-                fav = addFav(o);
-                break;
-            case 2:
-                fav = addFav(o);
-                break;
-            default:
-                fav = addFav(o);
-        }
-        return fav;
-    }
+
 
     /**
-     * funcion que añade un favorito especifico
-     * @param option opcion a introducir  1, 2 o 3
-     * @return devuelve el favortio añadido
+     * funcion que devuelve un favorito especifico, en función de la opción que se le pase
+     * @param option que sera la opción que reciba, entre 1 y 3
+     * @return devuelve el favorito seleccionado
      */
     @Override
     public Favorito addFav(int option) {
-        Favorito fav = null;
-        String favorito ="Videojuego";
+        Favorito fav;
+        String favorito =" del videojuego";
+
         if(option==1){
-            favorito ="Pelicula";
+            favorito =" de la pelicula";
         } else if (option==2) {
-            favorito="Musica";
+            favorito=" de la canción";
         }
 
-        String cod = leeString("inserte el codigo de la "+ favorito +" :");
-        String name = leeString("inserte el nombre de la"+ favorito+" :");
-        double duration = solicitateDouble("inserte la duracion de la"+ favorito +" : ", 0, 6);
-        String category = leeString("inserte la categoria : ");
-        int year = solicitateNumber("inserte el año de lanzamiento : ", 1, 9999);
-        int month = solicitateNumber("Inserte el month de lanzamiento : ", 1, 12);
-        int day = solicitateNumber("Inserte el dia de lanzamiento : ", 1, 31);
-        String author = leeString("inserte el autor al que se relaciona : ");
+        String cod = leeString("Inserte el codigo"+ favorito);
+        String name = leeString("Inserte el nombre"+ favorito);
+        double duration = solicitateDouble("Inserte la duracion"+ favorito, 0, 99);
+        String category = leeString("Inserte la categoria");
+        int year = solicitateNumber("Inserte el año de lanzamiento ", 1, 9999);
+        int month = solicitateNumber("Inserte el mes de lanzamiento ", 1, 12);
+        int day = solicitateNumber("Inserte el dia de lanzamiento ", 1, 31);
+        String author = leeString("Inserte el autor al que se relaciona ");
 
         if(option==1){
-            Pelicula pelicula = new Pelicula(cod, name, duration, category, LocalDate.of(year, month, day), author);
-            fav=pelicula;
+            fav= new Pelicula(cod, name, duration, category, LocalDate.of(year, month, day), author);
         } else if (option==2) {
-            Musica song= new Musica(cod, name, duration, category, LocalDate.of(year, month, day), author);
-            fav=song;
+            fav= new Musica(cod, name, duration, category, LocalDate.of(year, month, day), author);
         }else {
-            Juego juego= new Juego(cod, name, duration, category, LocalDate.of(year, month, day), author);
-            fav=juego;
+            fav= new Juego(cod, name, duration, category, LocalDate.of(year, month, day), author);
         }
 
         return fav;
@@ -174,10 +154,10 @@ public class GUI implements Interface.GUI {
     @Override
     public int solicitateNumber(String msg, int numMenor, int numMayor) {
         int num = -1;
-        System.out.println(msg);
         Scanner teclado = new Scanner(System.in);
-        do {
 
+        do {
+            System.out.println(msg);
             try {
                 num = teclado.nextInt();
 
@@ -186,11 +166,11 @@ public class GUI implements Interface.GUI {
                 System.out.println("Introduce una opcion valida");
             }
 
+            if (num < numMenor || num > numMayor){
+                System.out.println("La opción introducida no se contempla. Pruebe de nuevo.");
+            }
 
-        } while (num <= numMenor && num >= numMayor);
-
-
-
+        } while (num < numMenor || num > numMayor);
 
         return num;
     }
@@ -210,8 +190,11 @@ public class GUI implements Interface.GUI {
             System.out.println("No se encontraron elementos que coincidan.");
         } else {
             System.out.println(msg);
-            for (Model.Favorito fav : list) {
-                System.out.println(fav);
+            for (int i =0;i<list.size();i++) {
+                System.out.println(" ************************************** ");
+                System.out.println(" Los datos del favorito "+i+1+" son: ");
+                System.out.println(list.get(i).toString());
+                System.out.println(" ************************************** ");
             }
         }
     }
@@ -228,7 +211,7 @@ public class GUI implements Interface.GUI {
         if (isAdd) {
             System.out.println("Se ha añadido el favorito correctamente.");
         } else {
-            System.out.println("Ya existe un favorito con el mismo código.");
+            System.out.println("Ya existe un favorito con el mismo código, por lo que el favorito no se ha añadido.");
         }
     }
 
@@ -260,32 +243,50 @@ public class GUI implements Interface.GUI {
         }
     }
 
-    public double solicitateDouble(String msg, int num1, int num2) {
-        double num = -1;
+    /**
+     * Función que solicita un número que admite decimales al usuario, entre los valores minimo y máximos especificados
+     * @param msg mensaje que se va a imprimir para informar al usuario de que debe hacer
+     * @param numMenor el minimo entre el que se encuentra el numero que se le solicita al usuario
+     * @param numMayor el máximo entre el que se encuentra el numero que se le solicita al usuario
+     * @return el número que el usuario ha introducido por pantalla.
+     */
+    public double solicitateDouble(String msg, double numMenor, double numMayor) {
+        double num = -1.0;
+
         System.out.println(msg);
         Scanner teclado = new Scanner(System.in);
 
-            do {
-                try {
+        do {
+            try {
                 num = teclado.nextDouble();
-                }catch (Exception e) {
+
+            }catch (Exception e) {
                     teclado.nextLine();
                     System.out.println("Introduce una opcion valida");
-                }
+            }
 
+            if (num < numMenor || num > numMayor){
+                System.out.println("La opción introducida no se contempla." +
+                        "Debe estar entre "+numMenor+" y "+numMayor);
+            }
 
-
-            } while (num <= num1 && num >= num2);
+        } while (num < numMenor || num > numMayor);
 
         return num;
     }
+
+    /**
+     * Función encargada de devolver un favorito con los datos a actualizar
+     * @return un favorito, entre las opciones que se le solicitan al usuario. Hace uso de la función addFav.
+     */
     public Favorito updateFavorite(){
-        Favorito fav;
-        int option = solicitateNumber("Inserte que tipo de favorito que desea actualizar \n" +
-                "1 - Pelicula \n"+
-                "2 - Musica \n" +
-                "3 - Juego", 1, 3);
-        return  fav = addFav(option);
+
+        int option = solicitateNumber("""
+                Inserte que tipo de favorito que desea actualizar\s
+                1 - Pelicula\s
+                2 - Musica\s
+                3 - Juego""", 1, 3);
+        return addFav(option);
 
     }
 }

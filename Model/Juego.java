@@ -12,12 +12,11 @@ public class Juego extends Favorito implements Interface.Juego, Serializable {
 
     @Override
     public String toString() {
-        return "El juego"+ name +" tiene como datos: "+
-                "Código: " + cod + '\'' +
-                "Duración: " + duration +
-                "Categoría: '" + category + '\'' +
-                "Fecha de lanzamiento: " + releaseDate +
-                "Estudio:" + author + '\'' +
-                '}';
+        return "El videojuego "+ name +" tiene como datos: \n\n"+
+                "Código: " + cod + "\n" +
+                "Duración: " + duration + "\n"+
+                "Categoría: '" + category + "\n" +
+                "Fecha de lanzamiento: " + releaseDate +"\n"+
+                "Estudio:" + author + "\n";
     }
 }

@@ -156,7 +156,6 @@ public class Library implements ILibrary, Serializable {
      * @param fav el arreglo donde se van a a guardar los favoritos
      */
     private void selectClassToSearch(int option, ArrayList<Favorito> fav) {
-
         switch (option){
             case 1:
                  searchFavoriteMovies(fav);
@@ -169,9 +168,6 @@ public class Library implements ILibrary, Serializable {
                 break;
 
         }
-
-
-
     }
 
     /**
