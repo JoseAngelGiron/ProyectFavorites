@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface GUI {
 
-    public void showMainMenu();
+    public  int showMainMenu();
 
     public void showFavorite(Favorito favToShow);
 
@@ -55,4 +55,5 @@ public interface GUI {
     public void showIfUpdate(boolean isUpdate);
 
     public double solicitateDouble(String msg, int num1, int num2);
+    public Model.Favorito updateFavorite();
 }
