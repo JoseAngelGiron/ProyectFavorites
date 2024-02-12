@@ -1,21 +1,27 @@
 package Interface;
 
+import java.util.ArrayList;
+import Model.Favorito;
+
 public interface ILibrary {
-/*
-    findAll(){
-    }
-
-    findById(){
-
-    }
-
-    findByClass(){
-
-    }
-    findByName(){
-
-    }
 
 
-    //CreateFav(){create Movie, Music,VideoGame}*/
+
+    public Favorito findById(String ID);
+
+    public ArrayList<Model.Favorito> findByClass(int option);
+
+    public ArrayList<Favorito> findByName(String name);
+
+
+    public boolean addFav(Favorito favorito);
+
+
+
+
+    public boolean deletebyId(String id);
+
+    public boolean Update(Favorito fav);
+
+
 }
