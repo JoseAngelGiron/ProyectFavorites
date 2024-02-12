@@ -1,9 +1,12 @@
 package Model;
 
+import Persistence.Serializator;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Favorito implements Interface.Favorito {
+public class Favorito implements Interface.Favorito, Serializable {
     protected String cod;
     protected String name;
     protected double duration;

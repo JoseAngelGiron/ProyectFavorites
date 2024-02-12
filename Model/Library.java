@@ -2,11 +2,12 @@ package Model;
 
 import Interface.ILibrary;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
 
-public class Library implements ILibrary {
+public class Library implements ILibrary, Serializable {
     private ArrayList<Favorito> favoritos;
 
     public Library(){
@@ -48,7 +49,7 @@ public class Library implements ILibrary {
     /**
      * Esta función se encarga de borrar favoritos de la lista.
      * @param id el id con el que hará comparaciones para borrar
-     * @return
+     * @return true si se ha borrado el favorito en cuestión, false si no se encontro y por tanto no se borro.
      */
     @Override
     public boolean deletebyId(String id) {
@@ -99,7 +100,6 @@ public class Library implements ILibrary {
 
 
 
-
     /**
      * Este metodo añade un favorito al ultimo índice de la lista, si no hay otro con el mismo ID
      * @param fav el favorito que va a recibir
@@ -132,15 +132,15 @@ public class Library implements ILibrary {
      */
     @Override
     public boolean Update(Favorito fav) {
-        boolean isNotUpdate = true;
+        boolean isUpdate = false;
 
-        for (int i=0;i<favoritos.size() && isNotUpdate ;i++){
+        for (int i=0;i<favoritos.size() && !isUpdate ;i++){
             if (favoritos.get(i).equals(fav)){
                 favoritos.add(i, fav);
-                isNotUpdate = false;
+                isUpdate = true;
             }
         }
-        return isNotUpdate;
+        return isUpdate;
     }
 
 
