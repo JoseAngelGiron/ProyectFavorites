@@ -1,9 +1,9 @@
 package GUI;
 
-import Interface.Favorito;
-import Interface.Juego;
-import Interface.Musica;
-import Interface.Pelicula;
+import Model.Favorito;
+import Model.Juego;
+import Model.Musica;
+import Model.Pelicula;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,15 +15,16 @@ public class GUI implements Interface.GUI {
      * Menu principal del programa y la primera interraccion con el usuario
      */
     @Override
-    public void showMainMenu() {
+    public  int showMainMenu() {
         System.out.println("Menu principal");
         System.out.println("|----------------------------------------------------|");
-        System.out.println("| pulsa una opción valida mostrada a continuación    |");
         System.out.println("| 1. listar favoritos                                |");
         System.out.println("| 2. añadir favorito                                 |");
         System.out.println("| 3. eliminar favorito                               |");
-        System.out.println("| 4. salir del programa                              |");
+        System.out.println("| 4. actualizar el programa                          |");
+        System.out.println("| 5. salir del programa                              |");
         System.out.println("|----------------------------------------------------|");
+        return solicitateNumber("pulsa una opción valida mostrada a continuación", 1,4 );
     }
 
     /**
@@ -66,16 +67,29 @@ public class GUI implements Interface.GUI {
         return result;
     }
 
+    /**
+     * funcion que manda un mensaje para eliminar un favorito
+     * @return devulve el mensaje
+     */
     @Override
     public String removeFavorite() {
         return leeString("inserte el favorito que desea borrar: ");
     }
 
+    /**
+     * funcion que muestra el resultado (no es necesaria)
+     * @param Resultado
+     */
     @Override
     public void showResult(String Resultado) {
 
     }
 
+    /**
+     * funcion que sirve para leer un string y que comprueba si esta vacio o no, en un bucle
+     * @param msg el mensaje a escribir
+     * @return devuleve el mensaje
+     */
     @Override
     public String leeString(String msg) {
         Scanner Teclado = new Scanner(System.in);
@@ -88,6 +102,11 @@ public class GUI implements Interface.GUI {
         return msg;
     }
 
+    /**
+     * switch que indica que fvorito añadir si es pelicula, musica o juego
+     * @param o opcion a elegir entre las 3 disponibles
+     * @return devuelve el favorito
+     */
     @Override
     public Favorito options(int o) {
         Favorito fav;
@@ -100,14 +119,15 @@ public class GUI implements Interface.GUI {
                 break;
             default:
                 fav = addFav(o);
-
-
-
-
         }
         return fav;
     }
 
+    /**
+     * funcion que añade un favorito especifico
+     * @param option opcion a introducir  1, 2 o 3
+     * @return devuelve el favortio añadido
+     */
     @Override
     public Favorito addFav(int option) {
         Favorito fav = null;
@@ -132,7 +152,14 @@ public class GUI implements Interface.GUI {
         return fav;
     }
 
-
+    /**
+     * funcion que solicita un numero entero que contempla errores y que si no introduces en numero especifico
+     * entre los permitidos entra en un buble hasta que se introduzca uno permitido
+     * @param msg mensaje a introducir
+     * @param num1 variable numero 1 y minimo en la funcion
+     * @param num2 variable numero 2 y maxiomo en la funcion
+     * @return devuelve el numero introducido
+     */
     @Override
     public int solicitateNumber(String msg, int num1, int num2) {
         int num = -1;
@@ -221,5 +248,14 @@ public class GUI implements Interface.GUI {
             System.out.println("Introduce una opcion valida");
         }
         return num;
+    }
+    public Favorito updateFavorite(){
+        Favorito fav;
+        int option = solicitateNumber("Inserte que tipo de favorito que desea actualizar \n" +
+                "1 - Pelicula \n"+
+                "2 - Musica \n" +
+                "3 - Juego", 1, 3);
+        return  fav = addFav(option);
+
     }
 }
