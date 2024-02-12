@@ -5,6 +5,7 @@ import Interface.Juego;
 import Interface.Musica;
 import Interface.Pelicula;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,6 +29,7 @@ public class GUI implements Interface.GUI {
     /**
      * Esta función muestra los datos del favorito que recibe. Si el favorito es nulo,
      * muestra un mensaje diciendo que el favorito no se encontro
+     *
      * @param favToShow el favorito sobre el que se muestran datos
      */
     @Override
@@ -46,6 +48,7 @@ public class GUI implements Interface.GUI {
 
     /**
      * Funcion que añade favotito (aún por modificar)
+     *
      * @return devuelve el resultado añadido
      */
     @Override
@@ -57,16 +60,15 @@ public class GUI implements Interface.GUI {
         System.out.println("| 2. Musica                                          |");
         System.out.println("| 3. Juego                                           |");
         System.out.println("|----------------------------------------------------|");
-        int opcion = leeEntero("Inserte una opcion valida");
+        int opcion = solicitateNumber("Inserte una opcion valida", 1,3);
         Favorito result = options(opcion);
-        result.setNombre(leeString("inserte el nombre del favorito"));
-        result.setCategoria
+
         return result;
     }
 
     @Override
-    public Favorito removeFavorite() {
-        return null;
+    public String removeFavorite() {
+        return leeString("inserte el favorito que desea borrar: ");
     }
 
     @Override
@@ -75,82 +77,84 @@ public class GUI implements Interface.GUI {
     }
 
     @Override
-    public int leeEntero(String msg) {
-        Scanner Teclado = new Scanner(System.in);
-        System.out.println(msg + ": ");
-        return Teclado.nextInt();
-    }
-
-    @Override
     public String leeString(String msg) {
         Scanner Teclado = new Scanner(System.in);
-        System.out.println(msg + ": ");
-        return Teclado.nextLine();
+        String msg2;
+        do {
+            System.out.println(msg + ": ");
+            msg2 = Teclado.nextLine();
+
+        } while (!msg2.isEmpty());
+        return msg;
     }
 
     @Override
     public Favorito options(int o) {
-        Favorito opcion;
+        Favorito fav;
         switch (o) {
             case 1:
-                opcion = addMovie();
+                fav = addFav(o);
                 break;
             case 2:
-                opcion = addSong();
+                fav = addFav(o);
                 break;
             default:
-                opcion = addGame();
+                fav = addFav(o);
+
+
+
+
         }
-        return opcion;
+        return fav;
     }
 
     @Override
-    public Favorito addMovie() {
+    public Favorito addFav(int option) {
+        Favorito fav = null;
+        String cod = leeString("inserte el codigo de la pelicula:");
+        String name = leeString("inserte el nombre de la pelicula: ");
+        double duration = solicitateDouble("inserte la duracion de la pelicula: ", 0, 6);
+        String category = leeString("inserte el tipo de categoria: ");
+        String releaseDate = leeString("inserte la decha de lanzamiento: ");
+        String author = leeString("inserte el autor al que se relaciona: ");
 
-        System.out.println("inserte el nombre de la pelicula: ");
+        if(option==1){
+            Pelicula pelicula = new Pelicula(cod, name, duration, category, LocalDate.parse(releaseDate), author);
+            fav=pelicula;
+        } else if (option==2) {
+            Musica song= new Musica(cod, name, duration, category, LocalDate.parse(releaseDate), author);
+            fav=song;
+        }else {
+            Juego juego= new Juego(cod, name, duration, category, LocalDate.parse(releaseDate), author);
+            fav=juego;
+        }
 
-        Pelicula pelicula = new Pelicula();
-        return pelicula;
+        return fav;
     }
 
-    @Override
-    public Favorito addSong() {
-        Musica musica = new Musica();
-        System.out.println("inserte el nombre de la cancion");
-
-        musica.setMusica();
-        return musica;
-    }
 
     @Override
-    public Favorito addGame() {
-        Juego juego = new Juego();
-        System.out.println("Inserte el nombre del juego");
-
-        juego.setGame();
-        return null;
-    }
-
-    @Override
-    public void solicitateNumber(String msg, int num1, int num2) {
-        int num;
+    public int solicitateNumber(String msg, int num1, int num2) {
+        int num = -1;
         System.out.println(msg);
         Scanner teclado = new Scanner(System.in);
         try {
             do {
                 num = teclado.nextInt();
-            } while (num >=num1 && num <=num2);
-        }catch (Exception e){
+            } while (num >= num1 && num <= num2);
+        } catch (Exception e) {
             System.out.println("Introduce una opcion valida");
         }
-
+        return num;
     }
+
     /**
      * Esta función muestra una lista, comprobando previamente si esta vacía. Si lo esta, muestra un mensaje génerico diciendo
      * que no se encontraron elementos coincidentes, de otra forma, muestra la lista que se le pasa, mostrando previamente el
      * mensaje que se le ha pasado
+     *
      * @param list la lista de favoritos que se le pasa
-     * @param msg mensaje que previamente se muestra antes de imprimir la lista
+     * @param msg  mensaje que previamente se muestra antes de imprimir la lista
      */
     public void showList(ArrayList<Favorito> list, String msg) {
         if (list.isEmpty()) {
@@ -166,6 +170,7 @@ public class GUI implements Interface.GUI {
     /**
      * Esta función recibe un true o false y en función de true o false que recibe, muestra un mensaje diciendo
      * si se añadió el favorito o ya existía un favorito existente con el mismo código
+     *
      * @param isAdd que será true o false, para hacer la comparación
      */
     public void showIfFavoriteAdd(boolean isAdd) {
@@ -179,6 +184,7 @@ public class GUI implements Interface.GUI {
     /**
      * Esta función muestra si el favorito fue borrado al pasarle un true, o false si el favorito no se encontró y
      * por tanto se muestra un mensaje diciendo que no se encontró nada que borrar
+     *
      * @param isDeleted que será true o false, true si fue borrado, false si no se encontró ninguno
      */
     public void showIfFavoriteIsDeleted(boolean isDeleted) {
@@ -188,9 +194,11 @@ public class GUI implements Interface.GUI {
             System.out.println("No se encontró nada que borrar.");
         }
     }
+
     /**
      * Esta función muestra si el favorito fue actualizado correctamente o si por el contrario no se encontró y no se
      * actualizó nada
+     *
      * @param isUpdate que será true o false
      */
     public void showIfUpdate(boolean isUpdate) {
@@ -199,5 +207,19 @@ public class GUI implements Interface.GUI {
         } else {
             System.out.println("No se encontró el favorito, no se actualizó nada");
         }
+    }
+
+    public double solicitateDouble(String msg, int num1, int num2) {
+        double num = -1;
+        System.out.println(msg);
+        Scanner teclado = new Scanner(System.in);
+        try {
+            do {
+                num = teclado.nextInt();
+            } while (num >= num1 && num <= num2);
+        } catch (Exception e) {
+            System.out.println("Introduce una opcion valida");
+        }
+        return num;
     }
 }

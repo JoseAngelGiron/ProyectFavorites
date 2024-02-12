@@ -10,23 +10,19 @@ public interface GUI {
 
     public Favorito addFavorite();
 
-    public Favorito removeFavorite();
+    public String removeFavorite();
 
     public void showResult(String resultado);
 
-    public int leeEntero(String msg);
 
     public String leeString(String msg);
 
     public Favorito options(int o);
 
-    public Favorito addMovie();
+    public Favorito addFav(int num);
 
-    public Favorito addSong();
 
-    public Favorito addGame();
-
-    public void solicitateNumber(int num, String msg);
+    public int solicitateNumber( String msg, int num1, int num2);
 
     /**
      * Esta función muestra una lista, comprobando previamente si esta vacía. Si lo esta, muestra un mensaje génerico diciendo
@@ -57,4 +53,6 @@ public interface GUI {
      * @param isUpdate que sera true o false
      */
     public void showIfUpdate(boolean isUpdate);
+
+    public double solicitateDouble(String msg, int num1, int num2);
 }
