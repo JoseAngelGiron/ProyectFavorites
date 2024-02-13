@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface FuncionesVista {
 
-    //Esta la usaremos en conjunción con la de solicitar string
+
     /**
      * Esta función muestra los datos del favorito que recibe. Si el favorito es nulo,
      * muestra un mensaje diciendo que el favorito no se encontro
@@ -12,7 +12,7 @@ public interface FuncionesVista {
      */
     public void showFavorite(Favorito favToShow);
 
-    //Lo mismo, pero para la de solicitar enteros
+
     /**
      * Esta función muestra una lista, comprobando previamente si esta vacía. Si lo esta, muestra un mensaje génerico diciendo
      * que no se encontraron elementos coincidentes, de otra forma, muestra la lista que se le pasa, mostrando previamente el
@@ -23,9 +23,7 @@ public interface FuncionesVista {
     public void showList(ArrayList<Favorito> list, String msg);
 
 
-    //Estas 3 podría haberlas simplificado en una sola, pero lo vamos a dejar así, por ahora.
-    //La otra forma sería que una sola función recibiese dos mensajes que se le pasasen en el controlador
-    //y sacase por pantalla el msg1 si verdadero y el msg2 si falso. Luego te digo especifico mas si hace falta
+
 
     /**
      * Esta función recibe un true o false y en función de true o false que recibe, muestra un mensaje diciendo

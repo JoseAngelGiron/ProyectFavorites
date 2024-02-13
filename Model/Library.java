@@ -56,7 +56,7 @@ public class Library implements ILibrary, Serializable {
         boolean idFound = false;
 
         for(int i=0;i<favoritos.size() && !idFound;i++){
-            if(favoritos.get(i).getName().equalsIgnoreCase(id)){
+            if(favoritos.get(i).getCod().equalsIgnoreCase(id)){
                 favoritos.remove(i);
                 idFound = true;
             }
@@ -134,8 +134,9 @@ public class Library implements ILibrary, Serializable {
     public boolean Update(Favorito fav) {
         boolean isUpdate = false;
 
-        for (int i=0;i<favoritos.size() && !isUpdate ;i++){
+        for (int i=0; i<favoritos.size() && !isUpdate ;i++){
             if (favoritos.get(i).equals(fav)){
+                favoritos.remove(i);
                 favoritos.add(i, fav);
                 isUpdate = true;
             }
@@ -155,7 +156,6 @@ public class Library implements ILibrary, Serializable {
      * @param fav el arreglo donde se van a a guardar los favoritos
      */
     private void selectClassToSearch(int option, ArrayList<Favorito> fav) {
-
         switch (option){
             case 1:
                  searchFavoriteMovies(fav);
@@ -168,9 +168,6 @@ public class Library implements ILibrary, Serializable {
                 break;
 
         }
-
-
-
     }
 
     /**
